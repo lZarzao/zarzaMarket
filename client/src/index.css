@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+/*Main*/
+
+.boxes {
+  align-items: center;
+  margin-bottom: 0px
+} 
+
+.boxes h5{
+  margin: 0px;
+}
+
+/*Profile*/
+
+.profileDiv{
+  padding-top: 20px;
+  position: relative;
+  height: 200px;
+  background-color: lightslategray;
+}
+
+.profileDiv p, h1{
+  text-align: center;
+}
+
+.profileImgDiv{
+  position: relative;
+  height: 200px;
+  margin-top: 5px;
+  background-color: lightsalmon;
+}
+
+.ImgRow{
+  margin: -80px auto;
+}
+
+.ImgRow Img{
+  margin: auto auto;
+  height: 150px;
+  border: 5px solid #fff;
+  border-radius: 500px;
+  display: block;
+}
+
+.datosProfile{
+  text-align: center;
+}
+
+.datosDiv{
+  margin-top: 1rem;
+  background-color: lightyellow;
+  padding: 10px;
+}
+
+.datosDivHead{
+  display: flex;
+  justify-content: space-between;
+}
+
+.datosDivHead h4, p{
+  margin-bottom: 0px;
+}
+
+.sideBar{
+    position: fixed;
+    width: 90px;
+    left: 0;
+    top: 56px;
+    bottom: 0;
+    background-color: #253238;
+    padding-top: 16px;
+    height: calc(100vh - 56px);
+    z-index: 99;
+}
+
+.sideBarSection{
+    position: relative;
+    display: block;
+    padding: 12px 0;
+    text-align: center;
+}
+
+.sideBarSection h5{
+  color: #fff;
+  font-size: .625rem;
+  font-weight: 700;
+  /* color: rgba(255,255,255,.5); */
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 0;
+}
+
+.sideBarCircleSection{
+    position: relative;
+    margin: 0 auto 12px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(53,72,81,.5);
+    transition: width .75s,height .75s;
+    border-radius: 50%;
+}
+
+.sideBarContent{
+  background-size: 70%;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  background-position: center;
+  width: 50px;
+  height: 50px;
+  display: block
+}
+
+.bk0{
+  background-image: url("/images/profile.svg");
+}
+
+.bk1{
+  background-image: url("/images/payment.svg");
+}
+
+.bk2{
+  background-image: url("/images/product.svg");
+}
+
+.bk3{
+  background-image: url("/images/shop.svg");
+}
+
+.bk4{
+  background-image: url("/images/valoration.svg");
+}
+
+.bk5{
+  background-image: url("/images/estadistic.svg");
+}

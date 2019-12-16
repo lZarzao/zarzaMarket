@@ -1,12 +1,25 @@
 import React, { Component } from "react"
-import { Container, Carousel } from "react-bootstrap";
-//import Service from "./service"
+import { Container, Carousel, Row } from "react-bootstrap"
+import ProductCard from "../Product/ProductCard"
+
+import Service from "../../service/Product.service"
 
 class Videogames extends Component {
   constructor() {
     super()
-    this.state = {}
-    //  this._service = new Service()
+    this.state = {
+      videoGames: [],
+      backup: []
+    }
+    this._service = new Service()
+  }
+
+  componentDidMount() {
+    let category = "Video Juegos";
+    this._service
+      .findByCategory(category)
+      .then(theResult => this.setState({ videoGames: theResult.data }))
+      .catch(err => console.log(err.response));
   }
 
   render() {
@@ -34,9 +47,11 @@ let data = ["Play Station 4", "Xbox One", "Nintendo Switch"];
             </Carousel.Item>
           ))}
         </Carousel>
-        <>
-          <h1>Aquí debe ir un grid</h1>
-        </>
+        <Row>
+          {this.state.videoGames.map((elm, idx) => (
+            <ProductCard key={idx} products={elm} />
+          ))}
+        </Row>
       </Container>
     );
   }

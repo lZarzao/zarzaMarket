@@ -10,8 +10,8 @@ import ProfileShop from "./ProfileShop"
 import ProfileValoration from "./ProfileValoration"
 import ProfileStadistic from "./ProfileStadistic"
 import ProfileDataEdit from "./ProfileDataEdit"
-import ProductEdit from "../Product/ProductEdit";
-import ProductDetail from "../Product/ProductDetail";
+import ProductEdit from "../Product/ProductEdit"
+import ProductDetail from "../Profile/ProfileProductDetail"
 
 //import Service from "./service"
 
@@ -35,7 +35,7 @@ class Profile extends Component {
           <Route path="/zarzamarket/profile/valoration" component={ProfileValoration}/>
           <Route path="/zarzamarket/profile/estadistic" component={ProfileStadistic}/>
           <Route path="/zarzamarket/profile/edit" render={match => <ProfileDataEdit {...match} />}/>
-          <Route path="/zarzamarket/profile/myproducts/:handle" render={match => <ProductDetail {...match} />}/>
+          <Route exact path="/zarzamarket/profile/myproducts/:handle" render={match => <ProductDetail {...match} />}/>
           <Route path="/zarzamarket/profile/myproducts/edit/:handle" render={match => <ProductEdit {...match} />}/>
 
         </Switch>

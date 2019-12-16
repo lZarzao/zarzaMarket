@@ -8,9 +8,18 @@ export default class Services {
     })
   }
   find = () => this._service.get()
-  new = (name, category, subcategory, subsubcategory, price, negotiable, description, delivery, modelCode) =>
-  this._service.post("/new", { name, category, subcategory, subsubcategory, price, negotiable, description, delivery, modelCode})
+
+  findAll = () => this._service.get('/all')
+
+  findByCategory = (category) => this._service.get(`/category/${category}`)
+  
+  new = (name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode) =>
+  this._service.post("/new", { name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode})
+  
   getOne = (id) => this._service.get(`/${id}`)
-  edit = (name, category, id) => this._service.post(`/${id}/edit`, { name, category })
+  
+  edit = (name, category, subcategory, subsubcategory, price, negotiable, description, delivery, modelCode, brand, id) =>
+  this._service.post(`/${id}/edit`, { name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode })
+ 
   delete = (id) => this._service.get(`/${id}/delete`)
 }

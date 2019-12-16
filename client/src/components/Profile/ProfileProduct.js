@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row } from "react-bootstrap";
-import ProductCard from "../Product/ProductCard";
+import ProductCard from "../Profile/ProfileProductCard";
 import Service from "../../service/Product.service";
 
 class ProfileProducts extends Component {
@@ -21,11 +21,11 @@ class ProfileProducts extends Component {
   render() {
     return (
       <Container>
+        <Row>
         {this.state.products.map((elm, idx) => (
-          <Row key={idx}>
-            <ProductCard history={this.props.history} products={elm} />
-          </Row>
+          <ProductCard key={idx} history={this.props.history} products={elm} />
         ))}
+        </Row>
       </Container>
     );
   }

@@ -12,10 +12,11 @@ class ProductEdit extends Component {
       category: "",
       subcategory: "",
       subsubcategory: "",
-      price: "",
+      price: 0,
       negotiable: false,
       description: "",
       delivery: false,
+      brand: "",
       modelCode: "",
       selectCategory: ["LEGO", "Video Juegos", "Puzzle"],
       selectSubCategoryLEGO: [
@@ -67,6 +68,7 @@ class ProductEdit extends Component {
         "Play Station 4",
         "Xbox One",
         "Nintendo Switch",
+        "PC",
         "Accesorio"
       ],
       selectedSubCategoryPuzzle: [
@@ -103,10 +105,12 @@ class ProductEdit extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { name, category} = this.state
+    const {name, category, subcategory, subsubcategory, price,
+      negotiable, description, delivery, brand, modelCode} = this.state
     const id = this.state._id
     this._service
-      .edit(name, category, id)
+      .edit(name, category, subcategory, subsubcategory, price,
+        negotiable, description, delivery, brand, modelCode, id)
       .then(() => {
         this.props.history.push("/zarzamarket/profile/")
       })
@@ -114,9 +118,10 @@ class ProductEdit extends Component {
   }
 
   handleInputChange = e => {
-    let { name, value } = e.target;
-    this.setState({ [name]: value });
-  };
+    let { name, value } = e.target
+    if (name === 'negotiable' || name === 'delivery') value = e.target.checked
+    this.setState({ [name]: value })
+  }
 
   render() {
     return (
@@ -162,7 +167,6 @@ class ProductEdit extends Component {
             <Form.Label>Subcategory</Form.Label>
             <select
               name="subcategory"
-              required={true}
               onChange={this.handleInputChange}
               value={this.state.subcategory}
             >
@@ -171,29 +175,68 @@ class ProductEdit extends Component {
               )}
               {this.state.category === "LEGO" && (
                 <>
-                  {this.state.selectSubCategoryLEGO.map((elm, idx) => (
-                    <option key={idx} value={elm}>
-                      {elm}
-                    </option>
-                  ))}
+                  {this.state.subcategory === "" ? (
+                    <>
+                      <option value={this.state.subcategory}>
+                        Choose a Subcategory
+                      </option>
+                      {this.state.selectSubCategoryLEGO.map((elm, idx) => (
+                        <option key={idx} value={elm}>
+                          {elm}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    this.state.selectSubCategoryLEGO.map((elm, idx) => (
+                      <option key={idx} value={elm}>
+                        {elm}
+                      </option>
+                    ))
+                  )}
                 </>
               )}
               {this.state.category === "Video Juegos" && (
                 <>
-                  {this.state.selectedSubCategoryVG.map((elm, idx) => (
-                    <option key={idx} value={elm}>
-                      {elm}
-                    </option>
-                  ))}
+                  {this.state.subcategory === "" ? (
+                    <>
+                      <option value={this.state.subcategory}>
+                        Choose a Subcategory
+                      </option>
+                      {this.state.selectedSubCategoryVG.map((elm, idx) => (
+                        <option key={idx} value={elm}>
+                          {elm}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    this.state.selectedSubCategoryVG.map((elm, idx) => (
+                      <option key={idx} value={elm}>
+                        {elm}
+                      </option>
+                    ))
+                  )}
                 </>
               )}
               {this.state.category === "Puzzle" && (
                 <>
-                  {this.state.selectedSubCategoryPuzzle.map((elm, idx) => (
-                    <option key={idx} value={elm}>
-                      {elm}
-                    </option>
-                  ))}
+                  {this.state.subcategory === "" ? (
+                    <>
+                      <option value={this.state.subcategory}>
+                        Choose a Subcategory
+                      </option>
+                      {this.state.selectedSubCategoryPuzzle.map((elm, idx) => (
+                        <option key={idx} value={elm}>
+                          {elm}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    this.state.selectedSubCategoryPuzzle.map((elm, idx) => (
+                      <option key={idx} value={elm}>
+                        {elm}
+                      </option>
+                    ))
+                  )}
                 </>
               )}
             </select>
@@ -203,20 +246,43 @@ class ProductEdit extends Component {
               <>
                 <Form.Label>Subsubcategory</Form.Label>
                 <select
-                  name="subcategory"
+                  name="subsubcategory"
                   required={true}
                   onChange={this.handleInputChange}
-                  value={this.state.subcategory}
+                  value={this.state.subsubcategory}
                 >
-                  {this.state.selectedSubSubCategoryVG.map((elm, idx) => (
-                    <option key={idx} value={elm}>
-                      {elm}
-                    </option>
-                  ))}
+                  {this.state.subsubcategory === "" ? (
+                    <>
+                      <option value={this.state.subsubcategory}>
+                        Choose a Subsubcategory
+                      </option>
+                      {this.state.selectedSubSubCategoryVG.map((elm, idx) => (
+                        <option key={idx} value={elm}>
+                          {elm}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    this.state.selectedSubSubCategoryVG.map((elm, idx) => (
+                      <option key={idx} value={elm}>
+                        {elm}
+                      </option>
+                    ))
+                  )}
                 </select>
               </>
             )}
-
+            {(this.state.category === "Video Juegos" || this.state.category === "Puzzle") && (
+              <>
+                <Form.Label>Marca</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="brand"
+                  onChange={this.handleInputChange}
+                  value={this.state.brand}
+                ></Form.Control>
+              </>
+            )}
             {this.state.category === "LEGO" && (
               <>
                 <Form.Label>Model Code</Form.Label>
@@ -266,7 +332,7 @@ class ProductEdit extends Component {
             />
           </Form.Group>
           <Button variant="dark" type="submit">
-            Add Changes
+            Add
           </Button>
         </Form>
       </Container>

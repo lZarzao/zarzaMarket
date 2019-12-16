@@ -16,6 +16,7 @@ const productSchema = new Schema(
         "Play Station 4",
         "Xbox One",
         "Nintendo Switch",
+        "PC",
         "Accesorio",
         "Architecture",
         "BOOST",
@@ -65,15 +66,17 @@ const productSchema = new Schema(
     subsubcategory:{ type: String, enum:["Juego", "Consola", "Joystick", "Headset", "HeadPhone", "VR", "Mouse", "Keyword", "Otro", ""]},
     price: Number,
     negotiable: Boolean,
-    description: {type: String, maxlength: 200},
+    description: {type: String, maxlength: 400},
     delivery: Boolean,
     modelCode: String,
+    remate: Boolean,
+    brand: String,
     creator: { type: Schema.Types.ObjectId, ref: "User" }
   },
   {
     timestamps: true
   }
-);
+)
 
 const ProductModel = mongoose.model("Product", productSchema);
 module.exports = ProductModel

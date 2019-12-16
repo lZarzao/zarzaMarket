@@ -66,6 +66,8 @@ body {
   margin-bottom: 0px;
 }
 
+/*Profile SideBar*/
+
 .sideBar{
     position: fixed;
     width: 90px;
@@ -137,4 +139,40 @@ body {
 
 .bk5{
   background-image: url("/images/estadistic.svg");
+}
+
+/*Filter Side Bar*/
+
+.filterSideBar{
+    position: fixed;
+    width: 150px;
+    left: 0;
+    top: 56px;
+    bottom: 0;
+    background-color: #253238;
+    padding-top: 16px;
+    height: calc(100vh - 56px);
+    z-index: 99;
+}
+
+.filtersideBarSection h5{
+  color: #fff;
+  font-size: .625rem;
+  font-weight: 700;
+  /* color: rgba(255,255,255,.5); */
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 0;
+}
+
+.filtersideBarSection p{
+  color: #fff;
+  font-size: .8rem;
+}
+
+.filtersideBarSection input[type='checkbox'] {
+    display: inline;
+    width: auto;
+    height: 15px;
+    margin-left: 5px;
 }

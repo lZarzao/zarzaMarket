@@ -9,6 +9,7 @@ import Lego from "./components/Lego/lego"
 import Puzzle from "./components/Puzzle/Puzzle"
 import Videogames from "./components/Videogames/Videogames"
 import NewProduct from "./components/Product/NewProduct"
+import ProductDetail from "./components/Product/ProductDetail"
 import { Switch, Route, } from "react-router-dom"
 import './App.css'
 
@@ -57,6 +58,7 @@ class App extends Component {
           <Route path="/zarzamarket/signup" render={match => <Signup setUser={this.setTheUser} {...match} />}/>
           <Route path="/zarzamarket/login" render={match => <Login setUser={this.setTheUser} {...match} />}/>
           <Route path="/zarzamarket/profile" component={Profile}/>
+          <Route path="/zarzamarket/product/:handle" component={ProductDetail}/>
           <Route path="/zarzamarket/lego" component={Lego}/>
           <Route path="/zarzamarket/puzzle" component={Puzzle}/>
           <Route path="/zarzamarket/videogames" component={Videogames}/>

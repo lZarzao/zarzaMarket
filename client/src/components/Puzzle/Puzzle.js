@@ -1,13 +1,25 @@
-import React, { Component } from "react";
-import { Container, Carousel } from "react-bootstrap";
+import React, { Component } from "react"
+import { Container, Carousel, Row } from "react-bootstrap"
+import ProductCard from "../Product/ProductCard"
 
-//import Service from "./service"
+import Service from "../../service/Product.service"
 
 class Puzzle extends Component {
   constructor() {
     super();
-    this.state = {};
-    //  this._service = new Service()
+    this.state = {
+      puzzle: [],
+      backup: []
+    }
+    this._service = new Service()
+  }
+
+  componentDidMount() {
+    let category = "Puzzle"
+    this._service
+      .findByCategory(category)
+      .then(theResult => this.setState({ puzzle: theResult.data }))
+      .catch(err => console.log(err.response));
   }
 
   render() {
@@ -35,9 +47,11 @@ class Puzzle extends Component {
             </Carousel.Item>
           ))}
         </Carousel>
-        <>
-          <h1>Aquí debe ir un grid</h1>
-        </>
+        <Row>
+          {this.state.puzzle.map((elm, idx) => (
+            <ProductCard key={idx} products={elm} />
+          ))}
+        </Row>
       </Container>
     );
   }

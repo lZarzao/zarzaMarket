@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const express      = require('express')
+const express = require('express')
 const app = express()
 
 require("./config/mongoose.config")
@@ -14,6 +14,6 @@ require("./config/session.config")(app)
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/product", require("./routes/product.routes"));
 
-app.use((req, res) => { res.sendFile(_dirname + "/public/index.html")})
+app.use((req, res) => { res.sendFile(__dirname + "/public/index.html");})
 
 module.exports = app;

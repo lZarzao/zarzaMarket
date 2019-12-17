@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios from "axios"
 
 export default class Services {
   constructor() {
     this._service = axios.create({
-      baseURL: "http://localhost:5000/api/product",
+      baseURL: `${process.env.REACT_APP_URL}/product`,
       withCredentials: true // RUTAS PERSISTENTES
-    })
+    });
   }
   find = () => this._service.get()
 

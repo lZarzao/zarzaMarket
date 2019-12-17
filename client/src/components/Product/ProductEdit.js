@@ -109,8 +109,8 @@ class ProductEdit extends Component {
       negotiable, description, delivery, brand, modelCode} = this.state
     const id = this.state._id
     this._service
-      .edit(name, category, subcategory, subsubcategory, price,
-        negotiable, description, delivery, brand, modelCode, id)
+      .edit(id, name, category, subcategory, subsubcategory, price,
+        negotiable, description, delivery, brand, modelCode)
       .then(() => {
         this.props.history.push("/zarzamarket/profile/")
       })
@@ -269,7 +269,18 @@ class ProductEdit extends Component {
                       </option>
                     ))
                   )}
-                </select>
+                </select><br/>
+              </>
+            )}
+            {(this.state.category === "LEGO" || this.state.category === "Puzzle") && (
+              <>
+                <Form.Label>Model Code</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="modelCode"
+                  onChange={this.handleInputChange}
+                  value={this.state.modelCode}
+                ></Form.Control>
               </>
             )}
             {(this.state.category === "Video Juegos" || this.state.category === "Puzzle") && (
@@ -280,17 +291,6 @@ class ProductEdit extends Component {
                   name="brand"
                   onChange={this.handleInputChange}
                   value={this.state.brand}
-                ></Form.Control>
-              </>
-            )}
-            {this.state.category === "LEGO" && (
-              <>
-                <Form.Label>Model Code</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="modelCode"
-                  onChange={this.handleInputChange}
-                  value={this.state.modelCode}
                 ></Form.Control>
               </>
             )}

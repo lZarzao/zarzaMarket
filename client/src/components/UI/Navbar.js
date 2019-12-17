@@ -34,7 +34,7 @@ class Navigation extends Component {
               <Link to="/zarzamarket/profile/">Profile</Link>
             </Nav.Link>
             <Nav.Link as="li">
-              <Link to="/zarzamarket/product/new">New Product</Link>
+              <Link to="/zarzamarket/myproduct/new">New Product</Link>
             </Nav.Link>
             <Nav.Link as="li" onClick={this.logoutUser}>
               Logout

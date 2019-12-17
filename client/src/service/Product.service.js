@@ -18,8 +18,8 @@ export default class Services {
   
   getOne = (id) => this._service.get(`/${id}`)
   
-  edit = (name, category, subcategory, subsubcategory, price, negotiable, description, delivery, modelCode, brand, id) =>
-  this._service.post(`/${id}/edit`, { name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode })
+  edit = (id, name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode) =>
+    this._service.post(`/${id}/edit`, { name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode })
  
   delete = (id) => this._service.get(`/${id}/delete`)
 }

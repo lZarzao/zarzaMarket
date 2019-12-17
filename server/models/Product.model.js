@@ -68,9 +68,9 @@ const productSchema = new Schema(
     negotiable: Boolean,
     description: {type: String, maxlength: 400},
     delivery: Boolean,
-    modelCode: String,
     remate: Boolean,
     brand: String,
+    modelCode: String,
     creator: { type: Schema.Types.ObjectId, ref: "User" }
   },
   {

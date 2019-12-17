@@ -62,7 +62,7 @@ class App extends Component {
           <Route path="/zarzamarket/lego" component={Lego}/>
           <Route path="/zarzamarket/puzzle" component={Puzzle}/>
           <Route path="/zarzamarket/videogames" component={Videogames}/>
-          <Route path="/zarzamarket/product/new" render={match => <NewProduct {...match} />}/>
+          <Route exact path="/zarzamarket/myproduct/new" render={match => <NewProduct {...match} />}/>
         </Switch>
         <Footer />
       </>

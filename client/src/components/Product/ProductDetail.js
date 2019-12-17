@@ -16,8 +16,8 @@ class ProductDetail extends Component {
       negotiable: false,
       description: "",
       delivery: false,
-      modelCode: "",
       brand: "",
+      modelCode: "",
       creator: {}
     }
     this._service = new Service();

@@ -110,6 +110,7 @@ class newProduct extends Component {
           negotiable: false,
           description: "",
           delivery: false,
+          brand: "",
           modelCode: ""
         })
         this.props.history.push("/zarzamarket/profile")

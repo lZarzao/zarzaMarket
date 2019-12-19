@@ -3,6 +3,7 @@ import { Container, Carousel, Row, Form } from "react-bootstrap";
 import ProductCard from "../Product/ProductCard";
 
 import Service from "../../service/Product.service";
+import AuthService from "../../service/Auth.service"
 
 class Lego extends Component {
   constructor() {
@@ -17,33 +18,42 @@ class Lego extends Component {
       negotiable: false,
       delivery: false
     }
+    this._authService = new AuthService()
     this._service = new Service()
   }
 
   componentDidMount() {
     let category = "LEGO"
-    this._service
-      .findByCategory(category)
-      .then(theResult => this.setState({ legos: theResult.data, backup: theResult.data}))
+    let id = ""
+    let aux = []
+    this._authService
+      .loggedin()
+      .then(theResult => {
+        theResult.data._id && (id = theResult.data._id)
+      })
+      .catch(err => console.log(err.response));
+    this._service.findByCategory(category)
+      .then(theResult => {
+        aux = theResult.data.filter(elm => elm.creator !== id)
+      })
+      .then(() =>
+        this.setState({ legos: aux, backup: aux })
+      )
       .then(() => {
-        let categoryCopy = []
-        let priceCopy = []
-        this.state.legos.map(elm => {
-          priceCopy.push(elm.price)
-        })
-        priceCopy.sort((a, b) => a - b)
-        priceCopy.splice(0, priceCopy.length - 1)
-        this.setState({ price: priceCopy[0] })
-        this.state.legos.map(elm => {
-          categoryCopy.push(elm.subcategory)
-        })
+        let categoryCopy = [];
+        let priceCopy = [];
+        this.state.legos.map(elm => priceCopy.push(elm.price));
+        priceCopy.sort((a, b) => a - b);
+        priceCopy.splice(0, priceCopy.length - 1);
+        this.setState({ price: priceCopy[0] });
+        this.state.legos.map(elm => categoryCopy.push(elm.subcategory));
         this.setState({
           category: categoryCopy.filter(function(item, index, array) {
-            return array.indexOf(item) === index
+            return array.indexOf(item) === index;
           })
-        })
+        });
       })
-      .catch(err => console.log(err.response))
+      .catch(err => console.log(err.response));
   }
 
   handleInputChange = e => {
@@ -55,7 +65,6 @@ class Lego extends Component {
     }
 
   filter = () => {
-    {
       let legoCopy = []
       this.state.filterCategory.forEach((cat) => this.state.backup.forEach((elm) => (elm.subcategory === cat && legoCopy.push(elm))))
       this.state.filterCategory.length === 0 && (legoCopy = [...this.state.backup])
@@ -64,7 +73,6 @@ class Lego extends Component {
       this.state.filterPrice.length &&
       (legoCopy = legoCopy.filter((elm) => (elm.price >= (this.state.filterPrice[0]-100) && elm.price <= (this.state.filterPrice[this.state.filterPrice.length-1]))))
       this.setState({ legos: legoCopy })
-    }
   }
 
   handleDeliveryChange = e => {

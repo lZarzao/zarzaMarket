@@ -8,7 +8,7 @@ class ProfileProducts extends Component {
     super();
     this.state = {
       products: []
-    };
+    }
     this._service = new Service();
     this._service
       .find()

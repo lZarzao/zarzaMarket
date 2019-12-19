@@ -36,6 +36,15 @@ productRoutes.get("/category/:id", (req, res) => {
     });
 });
 
+productRoutes.get("/visit/:id", (req, res) => {
+  Product.find({ creator: req.params.id })
+    .then(allProducts => res.status(200).json(allProducts))
+    .catch(err => {
+      console.log("Error consultando la BBDD ", err);
+      json({ message: "Saving user to database went wrong." });
+    });
+});
+
 productRoutes.get("/", (req, res) => {
   Product.find({"creator": req.user._id})
     .then(allProducts => res.status(200).json(allProducts))

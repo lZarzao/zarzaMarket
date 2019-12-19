@@ -3,6 +3,7 @@ import { Container, Form, Carousel, Row } from "react-bootstrap"
 import ProductCard from "../Product/ProductCard"
 
 import Service from "../../service/Product.service"
+import AuthService from "../../service/Auth.service"
 
 class Puzzle extends Component {
   constructor() {
@@ -19,49 +20,47 @@ class Puzzle extends Component {
       negotiable: false,
       delivery: false
     }
+    this._authService = new AuthService()
     this._service = new Service()
   }
 
   componentDidMount() {
     let category = "Puzzle"
-    this._service
-      .findByCategory(category)
-      .then(theResult => {
-        let result = theResult.data.sort((a, b) => a - b)
-        this.setState({ puzzle: result, backup: result })})
-      .then(() => {
-        let categoryCopy = []
-        let priceCopy = []
-        let brandCopy = []
-        this.state.puzzle.map(elm =>{
-          brandCopy.push(elm.brand)
-        })
-        this.setState({
-          brand: brandCopy.filter(function (item, index, array) {
-            return array.indexOf(item) === index
+    let id = "";
+    let aux = [];
+    this._authService.loggedin().then(theResult => {
+      theResult.data._id && (id = theResult.data._id)
+    })
+    .then(()=>this._service.findByCategory(category))
+    .then(theResult => {
+        aux = theResult.data.sort((a, b) => a - b)
+        aux = aux.filter(elm => elm.creator !== id)})
+    .then(()=> this.setState({ puzzle: aux, backup: aux }))
+    .then(() => {
+      let categoryCopy = []
+      let priceCopy = []
+      let brandCopy = []
+      this.state.puzzle.map(elm => brandCopy.push(elm.brand))
+      this.setState({
+        brand: brandCopy.filter(function (item, index, array) {
+          return array.indexOf(item) === index
           })
         })
-        this.state.puzzle.map(elm => {
-          priceCopy.push(elm.price)
-        })
-        priceCopy.sort((a, b) => a - b)
-        priceCopy.splice(0, priceCopy.length - 1)
-        this.setState({ price: priceCopy[0] })
-        this.state.puzzle.map(elm => {
-          categoryCopy.push(elm.subcategory)
-        })
-        this.setState({
-          category: categoryCopy.filter(function (item, index, array) {
-            return array.indexOf(item) === index
+      this.state.puzzle.map(elm => priceCopy.push(elm.price))
+      priceCopy.sort((a, b) => a - b)
+      priceCopy.splice(0, priceCopy.length - 1)
+      this.setState({ price: priceCopy[0] })
+      this.state.puzzle.map(elm => categoryCopy.push(elm.subcategory))
+      this.setState({
+        category: categoryCopy.filter(function (item, index, array) {
+          return array.indexOf(item) === index
           })
         })
       })
-      .catch(err => console.log(err.response))
+    .catch(err => console.log(err.response))
   }
-
   
   filter = () => {
-    {
       let puzzleCopy = []
       let brandPuzzle = []
       this.state.filterCategory.forEach((cat) => this.state.backup.forEach((elm) => (elm.subcategory === cat && puzzleCopy.push(elm))))
@@ -75,7 +74,6 @@ class Puzzle extends Component {
       this.state.filterPrice.length &&
       (puzzleCopy = puzzleCopy.filter((elm) => (elm.price >= (this.state.filterPrice[0] - 15) && elm.price <= (this.state.filterPrice[this.state.filterPrice.length - 1]))))
       this.setState({ puzzle: puzzleCopy })
-    }
   }
   
   handleInputChange = e => {

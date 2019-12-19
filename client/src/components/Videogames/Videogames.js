@@ -3,6 +3,7 @@ import { Container, Carousel, Row, Form } from "react-bootstrap"
 import ProductCard from "../Product/ProductCard"
 
 import Service from "../../service/Product.service"
+import AuthService from "../../service/Auth.service";
 
 class Videogames extends Component {
   constructor() {
@@ -21,73 +22,72 @@ class Videogames extends Component {
       negotiable: false,
       delivery: false
     }
+    this._authService = new AuthService();
     this._service = new Service()
   }
 
   componentDidMount() {
     let category = "Video Juegos"
-    this._service
-      .findByCategory(category)
-      .then(theResult => {
-        let result = theResult.data.sort((a, b) => a - b)
-        this.setState({ vg: result, backup: result })
-      })
-      .then(() => {
-        let categoryCopy = []
-        let priceCopy = []
-        let brandCopy = []
-        let subcategory = []
-        this.state.vg.map(elm => {
-          brandCopy.push(elm.brand)
-        })
-        this.setState({
-          brand: brandCopy.filter(function (item, index, array) {
-            return array.indexOf(item) === index
-          })
-        })
-        this.state.vg.map(elm => {
-          priceCopy.push(elm.price)
-        })
-        priceCopy.sort((a, b) => a - b)
-        priceCopy.splice(0, priceCopy.length - 1)
-        this.setState({ price: priceCopy[0] })
-        this.state.vg.map(elm=> {
-          subcategory.push(elm.subsubcategory)
-        })
-        this.setState({
-          subcategory: subcategory.filter(function (item, index, array) {
-            return array.indexOf(item) === index
-          })
-        })
-        this.state.vg.map(elm => {
-          categoryCopy.push(elm.subcategory)
-        })
-        this.setState({
-          category: categoryCopy.filter(function (item, index, array) {
-            return array.indexOf(item) === index
-          })
+    let id = ""
+    let aux = []
+    this._authService.loggedin().then(theResult => {
+      theResult.data._id && (id = theResult.data._id)
+    })
+    .then(()=> this._service.findByCategory(category))
+    .then(theResult => {
+        aux = theResult.data.sort((a, b) => a - b)
+        aux = aux.filter(elm => elm.creator !== id)})
+    .then(()=>this.setState({ vg: aux, backup: aux }))
+    .then(() => {
+      let categoryCopy = []
+      let priceCopy = []
+      let brandCopy = []
+      let subcategory = []
+      this.state.vg.map(elm => brandCopy.push(elm.brand))
+      this.setState({
+        brand: brandCopy.filter(function (item, index, array) {
+          return array.indexOf(item) === index
         })
       })
-      .catch(err => console.log(err.response))
+      this.state.vg.map(elm => priceCopy.push(elm.price))
+      priceCopy.sort((a, b) => a - b)
+      priceCopy.splice(0, priceCopy.length - 1)
+      this.setState({ price: priceCopy[0] })
+      this.state.vg.map(elm=> subcategory.push(elm.subsubcategory))
+      this.setState({
+        subcategory: subcategory.filter(function (item, index, array) {
+          return array.indexOf(item) === index
+        })
+      })
+      this.state.vg.map(elm => categoryCopy.push(elm.subcategory))
+      this.setState({
+        category: categoryCopy.filter(function (item, index, array) {
+          return array.indexOf(item) === index
+        })
+      })
+    })
+    .catch(err => console.log(err.response))
   }
 
-
   filter = () => {
-    {
       let vgCopy = []
       let brandvg = []
-      this.state.filterCategory.forEach((cat) => this.state.backup.forEach((elm) => (elm.subcategory === cat && vgCopy.push(elm))))
+      let subCopy = []
+      this.state.filterCategory.forEach((cat) => {this.state.backup.forEach((elm) => {(elm.subcategory === cat && vgCopy.push(elm))})})
       this.state.filterCategory.length === 0 && (vgCopy = [...this.state.backup])
       if (this.state.filterBrand.length > 0) {
         this.state.filterBrand.forEach((brand) => vgCopy.forEach((elm) => (elm.brand === brand && brandvg.push(elm))))
         brandvg.length ? vgCopy = [...brandvg] : vgCopy = []
+      }
+      if (this.state.filterSubCategory.length > 0) {
+        this.state.filterSubCategory.forEach((sCat) => vgCopy.forEach((elm) => (elm.subsubcategory === sCat && subCopy.push(elm))))
+        subCopy.length ? (vgCopy = [...subCopy]) : (vgCopy = [])
       }
       this.state.delivery && (vgCopy = vgCopy.filter((elm) => elm.delivery === true))
       this.state.negotiable && (vgCopy = vgCopy.filter((elm) => elm.negotiable === true))
       this.state.filterPrice.length &&
         (vgCopy = vgCopy.filter((elm) => (elm.price >= (this.state.filterPrice[0] - 100) && elm.price <= (this.state.filterPrice[this.state.filterPrice.length - 1]))))
       this.setState({ vg: vgCopy })
-    }
   }
 
   handleInputChange = e => {
@@ -169,9 +169,6 @@ let data = ["Play Station 4", "Xbox One", "Nintendo Switch"]
             </Carousel.Item>
           ))}
         </Carousel>
-
-
-
         {this.state.category.length && (
           <div>
             <div className="filterSideBar">
@@ -241,9 +238,6 @@ let data = ["Play Station 4", "Xbox One", "Nintendo Switch"]
             </div>
           </div>
         )}
-
-
-
         <Row>
           {this.state.vg.map((elm, idx) => (
             <ProductCard key={idx} products={elm} />

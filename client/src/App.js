@@ -10,6 +10,7 @@ import Puzzle from "./components/Puzzle/Puzzle"
 import Videogames from "./components/Videogames/Videogames"
 import NewProduct from "./components/Product/NewProduct"
 import ProductDetail from "./components/Product/ProductDetail"
+import ProfileId from "./components/ProfileId/ProfileId"
 import { Switch, Route, } from "react-router-dom"
 import './App.css'
 
@@ -40,9 +41,9 @@ class App extends Component {
         .catch(err => {
           this.setState({ loggedInUser: false })
           console.log({ err })
-        });
+        })
     }
-  };
+  }
 
   render() {
     this.fetchUser()
@@ -63,6 +64,7 @@ class App extends Component {
           <Route path="/zarzamarket/puzzle" component={Puzzle}/>
           <Route path="/zarzamarket/videogames" component={Videogames}/>
           <Route exact path="/zarzamarket/myproduct/new" render={match => <NewProduct {...match} />}/>
+          <Route path="/zarzamarket/visit/profile/:id" component={ProfileId}/>
         </Switch>
         <Footer />
       </>

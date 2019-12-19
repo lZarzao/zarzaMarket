@@ -1,7 +1,8 @@
-import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import React, { Component } from "react"
+import { Container } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
-import Service from "../../service/Product.service";
+import Service from "../../service/Product.service"
 
 class ProductDetail extends Component {
   constructor() {
@@ -63,9 +64,8 @@ class ProductDetail extends Component {
         <h3>Negociable?</h3>
         <p>{`${this.state.negotiable}`}</p>
         <h3>Creador</h3>
-        <p>{this.state.creator.username} {this.state.creator.userlastname}</p>
+        <Link to={`/zarzamarket/visit/profile/${this.state.creator._id}`}>{this.state.creator.username} {this.state.creator.userlastname}</Link>
       </Container>
-
     )
   }
 }

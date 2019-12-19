@@ -12,6 +12,7 @@ import ProfileStadistic from "./ProfileStadistic"
 import ProfileDataEdit from "./ProfileDataEdit"
 import ProductEdit from "../Product/ProductEdit"
 import ProductDetail from "../Profile/ProfileProductDetail"
+import {Chat} from "../chat/chat"
 
 //import Service from "./service"
 
@@ -37,8 +38,8 @@ class Profile extends Component {
           <Route path="/zarzamarket/profile/edit" render={match => <ProfileDataEdit {...match} />}/>
           <Route exact path="/zarzamarket/profile/myproducts/:handle" render={match => <ProductDetail {...match} />}/>
           <Route path="/zarzamarket/profile/myproducts/edit/:handle" render={match => <ProductEdit {...match} />}/>
-
         </Switch>
+        <Chat />
       </Container>
     );
   }

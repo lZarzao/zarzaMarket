@@ -108,4 +108,10 @@ authRoutes.get("/loggedin", (req, res, next) => {
   res.status(403).json({ message: "Unauthorized" })
 })
 
+authRoutes.get("/:id", (req, res) => {
+  User.findById(req.params.id)
+  .then(theUser => res.status(200).json({theUser}))
+  .catch(err => res.status(500).json({err}))
+})
+
 module.exports = authRoutes;

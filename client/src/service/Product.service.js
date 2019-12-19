@@ -12,6 +12,8 @@ export default class Services {
   findAll = () => this._service.get('/all')
 
   findByCategory = (category) => this._service.get(`/category/${category}`)
+
+  findVisitProducts = (id) => this._service.get(`visit/${id}`)
   
   new = (name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode) =>
   this._service.post("/new", { name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode})

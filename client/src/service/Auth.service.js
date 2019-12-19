@@ -8,9 +8,10 @@ export default class Services {
     });
   }
 
-  signup = (username, password) => this._service.post("/signup", { username, password });
-  login = (username, password) => this._service.post("/login", { username, password });
-  edit = (username, userlastname, email, telefono) => this._service.post("/edit", { username, userlastname, email, telefono });
-  logout = () => this._service.post("/logout");
-  loggedin = () => this._service.get("/loggedin");
+  signup = (username, password) => this._service.post("/signup", { username, password })
+  login = (username, password) => this._service.post("/login", { username, password })
+  edit = (username, userlastname, email, telefono) => this._service.post("/edit", { username, userlastname, email, telefono })
+  logout = () => this._service.post("/logout")
+  loggedin = () => this._service.get("/loggedin")
+  getOne = (id) => this._service.get(`/${id}`)
 }

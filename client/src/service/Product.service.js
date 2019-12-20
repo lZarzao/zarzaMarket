@@ -15,13 +15,15 @@ export default class Services {
 
   findVisitProducts = (id) => this._service.get(`visit/${id}`)
   
-  new = (name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode) =>
-  this._service.post("/new", { name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode})
+  new = (name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode, imageUrl, show) =>
+  this._service.post("/new", { name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode, imageUrl, show})
   
   getOne = (id) => this._service.get(`/${id}`)
   
   edit = (id, name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode) =>
     this._service.post(`/${id}/edit`, { name, category, subcategory, subsubcategory, price, negotiable, description, delivery, brand, modelCode })
+
+  update = (id, show) => this._service.post(`/${id}/update`, { show })
  
   delete = (id) => this._service.get(`/${id}/delete`)
 }

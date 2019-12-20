@@ -8,6 +8,9 @@ class ProfileHead extends Component {
     super();
     this.state = {}
     this._service = new Service()
+  }
+
+  componentDidMount(){
     this._service
       .loggedin()
       .then(theLoggedInUserFromTheServer =>
@@ -20,19 +23,19 @@ class ProfileHead extends Component {
   }
 
   render() {
-
+    console.log(this.state.imageUrl)
     return (
       <Container>
         <div className="profileDiv">
           <h1>{this.state.username} {this.state.userlastname}</h1>
-          <p>{this.state.email}</p>
         </div>
         <div className="profileImgDiv">
+        {(this.state.imageUrl !== undefined) && (
           <Row style={{ height: 80 + "px" }}>
             <Col md="12" className="ImgRow">
-              <img src="/images/xbox.png" alt="pic"></img>
+              <img src={this.state.imageUrl} alt="pic"></img>
             </Col>
-          </Row>
+            </Row>)}
           <Row>
             <Col md="4" className="datosProfile">
               <h3>Compras</h3>
@@ -46,7 +49,7 @@ class ProfileHead extends Component {
           </Row>
         </div>
       </Container>
-    )
+      )
   }
 }
 

@@ -2,17 +2,22 @@ import React, { Component } from "react"
 import { Container, Form, Button } from "react-bootstrap"
 
 import Service from "../../service/Auth.service"
+import FilesService from "../../service/Files.service";
 
 class ProfileDataEdit extends Component {
   constructor() {
     super();
     this.state = {
-        username: "",
-        userlastname: "",
-        email: "",
-        telefono: ""
-    }
+      disabledButton: false,
+      buttonText: "Actualizar",
+      username: "",
+      userlastname: "",
+      email: "",
+      telefono: "",
+      imageUrl: ""
+    };
     this._service = new Service()
+    this._filesService = new FilesService();
     this._service
       .loggedin()
       .then(theLoggedInUserFromTheServer =>
@@ -26,13 +31,13 @@ class ProfileDataEdit extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { username, userlastname, email, telefono } = this.state;
+    const { username, userlastname, email, telefono, imageUrl } = this.state;
     this._service
-      .edit(username, userlastname, email, telefono)
-      .then(theEditedUser => {
-        this.props.history.push("/zarzamarket/profile/")
+      .edit(username, userlastname, email, telefono, imageUrl)
+      .then(() => {
+        this.props.history.push("/zarzamarket/profile/");
       })
-      .catch(err => console.log(err.response.data.message))
+      .catch(err => console.log(err.response.data.message));
   }
 
   handleInputChange = e => {
@@ -40,13 +45,33 @@ class ProfileDataEdit extends Component {
     this.setState({ [name]: value })
   }
 
+  handleFileUpload = e => {
+  this.setState({ disabledButton: true, buttonText: "Subiendo imagen..." })
+  const uploadData = new FormData();
+  uploadData.append("imageUrl", e.target.files[0]);
+  this._filesService
+    .handleUpload(uploadData)
+    .then(response => {
+      console.log(
+        "Subida de archivo finalizada! La URL de Cloudinray es: ",
+        response.data.secure_url
+      );
+      this.setState({
+        disabledButton: false,
+        buttonText: "Actualizar",
+        imageUrl: response.data.secure_url
+      });
+    })
+    .catch(err => console.log(err));
+  }
+
   render() {
     return (
-      <Container>
+      <Container >
         <h1>Editar Datos</h1>
+        <div className="NewProduct">
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
-            <Form.Label>Nombre</Form.Label>
             <Form.Control
               type="text"
               name="username"
@@ -55,7 +80,6 @@ class ProfileDataEdit extends Component {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Apellido</Form.Label>
             <Form.Control
               type="text"
               name="userlastname"
@@ -64,7 +88,6 @@ class ProfileDataEdit extends Component {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Email</Form.Label>
             <Form.Control
               type="text"
               name="email"
@@ -73,7 +96,6 @@ class ProfileDataEdit extends Component {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Telefono</Form.Label>
             <Form.Control
               type="text"
               name="telefono"
@@ -81,12 +103,21 @@ class ProfileDataEdit extends Component {
               value={this.state.telefono}
             />
           </Form.Group>
-          <Button variant="dark" type="submit">
-            Add Changes
+          <Form.Group>
+            <Form.Label>Subir Imagen</Form.Label>
+            <Form.Control
+              name="imageUrl"
+              type="file"
+              onChange={this.handleFileUpload}
+            />
+          </Form.Group>
+          <Button variant="dark" type="submit" disabled={this.state.disabledButton}>
+           {this.state.buttonText}
           </Button>
         </Form>
+        </div>
       </Container>
-    )
+    );
   }
 }
 

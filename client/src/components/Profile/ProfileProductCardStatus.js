@@ -39,15 +39,8 @@ class ProductCard extends Component {
             </Card.Text>
           </Card.Body>
           <Card.Footer>
+          {this.props.pending && <Button className="DeleteButton" onClick={this.handleSubmit} style={{ width: "100%" }}>Cancelar Venta</Button>}
             <small className="text-muted">
-              <Link
-                to={`/zarzamarket/profile/myproducts/edit/${this.props.products._id}`}
-                className="mt-auto btn btn-primary"
-                style={{ width: "100%" }}
-              >
-                Editar
-              </Link><br/><br/>
-              <Button className="DeleteButton" onClick={this.handleSubmit} style={{ width: "100%" }}>Eliminar</Button>
             </small>
           </Card.Footer>
         </Card>

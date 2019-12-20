@@ -4,12 +4,13 @@ const productRoutes = express.Router();
 const Product = require("../models/Product.model.js");
 
 productRoutes.post("/new", (req, res) => {
+  console.log(req.body)
   const {
     name, category, subcategory, subsubcategory, price,
-    negotiable, description, delivery, brand, modelCode} = req.body;
+    negotiable, description, delivery, brand, modelCode, imageUrl, show} = req.body;
   Product.create({
     name, category, subcategory, subsubcategory, price,
-    negotiable, description, delivery, brand, modelCode, creator: req.user._id
+    negotiable, description, delivery, brand, modelCode, imageUrl, show, creator: req.user._id
   })
     .then(newProduct => res.status(200).json(newProduct))
     .catch(err => {
@@ -86,4 +87,16 @@ productRoutes.post("/:id/edit", (req, res) => {
     })
 })
 
+productRoutes.post("/:id/update", (req, res) => {
+  console.log(req.body)
+  const { show } = req.body
+  Product.findByIdAndUpdate(req.params.id, {
+    show
+  })
+    .then(editOne => res.status(200).json(editOne))
+    .catch(err => {
+      console.log("Error consultando la BBDD ", err)
+      json({ message: "Saving user to database went wrong." })
+    })
+})
 module.exports = productRoutes

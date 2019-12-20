@@ -126,10 +126,10 @@ class ProductEdit extends Component {
   render() {
     return (
       <Container>
-        <h1>Editar Datos</h1>
+        <h1>Editar Datos</h1><hr/>
+        <div className="NewProduct">
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
-            <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
               name="name"
@@ -138,7 +138,6 @@ class ProductEdit extends Component {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Category</Form.Label>
             <select
               name="category"
               required={true}
@@ -164,7 +163,6 @@ class ProductEdit extends Component {
             </select>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Subcategory</Form.Label>
             <select
               name="subcategory"
               onChange={this.handleInputChange}
@@ -244,7 +242,6 @@ class ProductEdit extends Component {
           <Form.Group>
             {this.state.category === "Video Juegos" && (
               <>
-                <Form.Label>Subsubcategory</Form.Label>
                 <select
                   name="subsubcategory"
                   required={true}
@@ -274,7 +271,6 @@ class ProductEdit extends Component {
             )}
             {(this.state.category === "LEGO" || this.state.category === "Puzzle") && (
               <>
-                <Form.Label>Model Code</Form.Label>
                 <Form.Control
                   type="text"
                   name="modelCode"
@@ -296,7 +292,6 @@ class ProductEdit extends Component {
             )}
           </Form.Group>
           <Form.Group>
-            <Form.Label>Price</Form.Label>
             <Form.Control
               type="number"
               name="price"
@@ -305,16 +300,21 @@ class ProductEdit extends Component {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Negotiable?</Form.Label>
+            <Form.Label>¿El precio es Negociable?</Form.Label>
             <Form.Control
               type="checkbox"
               name="negotiable"
               onChange={this.handleInputChange}
               checked={this.state.negotiable}
+                style={{
+                  display: "inline",
+                  width: "10%",
+                  height: "15px",
+                  marginLeft: "10px"
+                }}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Description</Form.Label>
             <Form.Control
               type="text"
               name="description"
@@ -323,18 +323,25 @@ class ProductEdit extends Component {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Delivery</Form.Label>
+            <Form.Label>¿Incluye Delivery?</Form.Label>
             <Form.Control
               type="checkbox"
               name="delivery"
               onChange={this.handleInputChange}
               checked={this.state.delivery}
+                style={{
+                  display: "inline",
+                  width: "10%",
+                  height: "15px",
+                  marginLeft: "10px"
+                }}
             />
           </Form.Group>
           <Button variant="dark" type="submit">
-            Add
+            Actualizar
           </Button>
         </Form>
+        </div>
       </Container>
     );
   }

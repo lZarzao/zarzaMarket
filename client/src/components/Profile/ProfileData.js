@@ -33,33 +33,31 @@ class ProfileData extends Component {
           <hr />
           <Row>
             <Col>
-              <h5>
-                Nombre: <p>{this.state.username}</p>
-              </h5>
+              <p><span>Nombre:</span> {this.state.username}</p>
             </Col>
             <Col>
-              <h5>
-                Apellido: <p>{this.state.userlastname}</p>
-              </h5>
+                <p><span>Apellido: </span>{this.state.userlastname}</p>
             </Col>
           </Row>
           <br />
           <Row>
             <Col>
-              <h5>
-                Teléfono: <p>{this.state.telefono}</p>
-              </h5>
+              <p>
+                <span>Teléfono: </span> {this.state.telefono}
+              </p>
             </Col>
             <Col>
-              <h5>
-                Email: <p>{this.state.email}</p>
-              </h5>
+              <p>
+                <span>Email: </span>{this.state.email}
+              </p>
             </Col>
           </Row>
+          <hr/>
           <br />
-          <h5>Horario:</h5>
-          <br />
-          <h5>Dirección:</h5>
+          <span>Horario: </span>
+          <br /><br/>
+          <span>Dirección:</span>
+          <hr/>
         </div>
       </Container>
     );

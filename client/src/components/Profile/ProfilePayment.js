@@ -20,35 +20,40 @@ class ProfilePayment extends Component {
             <p>Editar</p>
           </div>
           <hr />
-          <h4>Cuenta de PayPal</h4>
-          <Row>
-            <Col>
-              <h5>Datos</h5>
-            </Col>
-            <Col>
-              <h5>Datos</h5>
-            </Col>
-          </Row>
-          <br />
-          <h4>Tarjetas de Crédito</h4>
-          <Row>
-            <Col>
-              <h5>Datos</h5>
-            </Col>
-            <Col>
-              <h5>Datos</h5>
-            </Col>
-          </Row>
-          <br />
-          <h4>Cuentas Bancarias</h4>
-          <Row>
-            <Col>
-              <h5>Datos</h5>
-            </Col>
-            <Col>
-              <h5>Datos</h5>
-            </Col>
-          </Row>
+          <div className="paymentData">
+            <h4>Cuenta de PayPal</h4>
+            <Row>
+              <Col>
+                <span>Datos</span>
+              </Col>
+              <Col>
+                <span>Datos</span>
+              </Col>
+            </Row>
+            <hr />
+            <br />
+            <h4>Tarjetas de Crédito</h4>
+            <Row>
+              <Col>
+                <span>Datos</span>
+              </Col>
+              <Col>
+                <span>Datos</span>
+              </Col>
+            </Row>
+            <hr />
+            <br />
+            <h4>Cuentas Bancarias</h4>
+            <Row>
+              <Col>
+                <span>Datos</span>
+              </Col>
+              <Col>
+                <span>Datos</span>
+              </Col>
+            </Row>
+            <hr />
+          </div>
         </div>
       </Container>
     );

@@ -41,28 +41,33 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <Container>
+      <Container className="loginView">
+        <div className="LoginImgDiv">
+          <img src="/images/lego.png"></img>
+        </div>
         <h1>Iniciar sesión</h1>
 
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
-            <Form.Label>Usuario</Form.Label>
             <Form.Control
               type="text"
               name="username"
               onChange={this.handleInputChange}
               value={this.state.user.username}
+              placeholder="Email"
             />
+            <br />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Contraseña</Form.Label>
             <Form.Control
-              type="text"
+              type="password"
               name="password"
               onChange={this.handleInputChange}
               value={this.state.user.password}
+              placeholder="Password"
             />
           </Form.Group>
+          <br />
           <Button variant="dark" type="submit">
             Iniciar sesión
           </Button>
@@ -78,7 +83,8 @@ class LoginForm extends Component {
             right: "10px",
             bottom: "10px",
             minWidth: "250px"
-          }}>
+          }}
+        >
           <Toast.Header>
             <strong className="mr-auto">Error</strong>
             <small>Session manager</small>

@@ -13,6 +13,7 @@ class ProfileData extends Component {
   render() {
     return (
       <Container>
+      <h1>Perfil</h1><hr/>
         <div className="datosDiv">
           <div className="datosDivHead">
             <h4>Datos</h4>

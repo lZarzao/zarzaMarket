@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import { Col } from "react-bootstrap"
+import { Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom"
 
 import Service from "../../service/Product.service";
@@ -13,12 +13,30 @@ class ProductCard extends Component {
 
   render() {
     return (
-        <Col>
-          <Link to={`/zarzamarket/visit/profile/${this.props.products._id}/products/details`}><p>{this.props.products.name}</p></Link>
-          <p>{this.props.products.category}</p>
-          <p>{this.props.products.price} {"€"}</p>
+      <>
+        <Col xs={6} md={4}>
+          <Card className="profileProductCard">
+            <Card.Img variant="top" src={this.props.products.imageUrl} />
+            <hr />
+            <Card.Body>
+              <Link
+                to={`/zarzamarket/visit/profile/${this.props.products.creator}/products/details/${this.props.products._id}` }
+              >
+                <Card.Title>{this.props.products.name}</Card.Title>
+              </Link>
+              <Card.Text>
+                {this.props.products.category} {this.props.products.subcategory}
+                <br />
+                {this.props.products.price} {"€"}
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted"></small>
+            </Card.Footer>
+          </Card>
         </Col>
-    )
+      </>
+    );
   }
 }
 

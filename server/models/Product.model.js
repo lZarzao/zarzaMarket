@@ -63,7 +63,7 @@ const productSchema = new Schema(
         "Xtra"
       ]
     },
-    subsubcategory:{ type: String, enum:["Juego", "Consola", "Joystick", "Headset", "HeadPhone", "VR", "Mouse", "Keyword", "Otro", ""]},
+    subsubcategory: { type: String, enum:["Juego", "Consola", "Joystick", "Headset", "HeadPhone", "VR", "Mouse", "Keyword", "Otro", ""]},
     price: Number,
     negotiable: Boolean,
     description: {type: String, maxlength: 400},
@@ -71,6 +71,8 @@ const productSchema = new Schema(
     remate: Boolean,
     brand: String,
     modelCode: String,
+    show: Boolean,
+    imageUrl: String,
     creator: { type: Schema.Types.ObjectId, ref: "User" }
   },
   {

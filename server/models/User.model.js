@@ -8,6 +8,7 @@ const userSchema = new Schema(
     email: String,
     telefono: String,
     password: String,
+    imageUrl: String,
     location: { type: { type: String }, coordinates: [Number] }
   },
   {

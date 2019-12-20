@@ -33,7 +33,7 @@ class Profile extends Component {
         <Switch>
           <Route exact path="/zarzamarket/visit/profile/:id" render={match => <ProfileData user={this.state.theUser} {...match} />}/>
           <Route exact path="/zarzamarket/visit/profile/:id/products" render={match => <ProfileIdProducts user={this.state.theUser} {...match}/>}/>
-          <Route path="/zarzamarket/visit/profile/:id/products/details" render={match => <ProfileIdProductsDetails user={this.state.theUser} {...match}/>}/>
+          <Route path="/zarzamarket/visit/profile/:id/products/details/:handle" render={match => <ProfileIdProductsDetails user={this.state.theUser} {...match}/>}/>
           <Route path="/zarzamarket/visit/profile/:id/sales" render={match => <ProfileSales user={this.state.theUser} {...match} />}/>
           <Route path="/zarzamarket/visit/profile/:id/valoration" component={ProfileValoration}/>
         </Switch></>}

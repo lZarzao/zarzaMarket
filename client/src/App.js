@@ -49,7 +49,7 @@ class App extends Component {
     this.fetchUser()
 
     return (
-      <>
+      <div className="MainTop">
         <Navbar
           loggedInUser={this.state.loggedInUser}
           setUser={this.setTheUser}/>
@@ -59,15 +59,14 @@ class App extends Component {
           <Route path="/zarzamarket/signup" render={match => <Signup setUser={this.setTheUser} {...match} />}/>
           <Route path="/zarzamarket/login" render={match => <Login setUser={this.setTheUser} {...match} />}/>
           <Route path="/zarzamarket/profile" component={Profile}/>
-          <Route path="/zarzamarket/product/:handle" component={ProductDetail}/>
-          <Route path="/zarzamarket/lego" component={Lego}/>
-          <Route path="/zarzamarket/puzzle" component={Puzzle}/>
-          <Route path="/zarzamarket/videogames" component={Videogames}/>
+          <Route path="/zarzamarket/product/:handle" render= {match => <ProductDetail {...match}/>}/>
+          <Route path="/zarzamarket/lego" render= {match => <Lego {...match}/>}/>
+          <Route path="/zarzamarket/puzzle" render= {match => <Puzzle {...match}/>}/>
+          <Route path="/zarzamarket/videogames" render= {match => <Videogames {...match}/>}/>
           <Route exact path="/zarzamarket/myproduct/new" render={match => <NewProduct {...match} />}/>
           <Route path="/zarzamarket/visit/profile/:id" component={ProfileId}/>
         </Switch>
-        <Footer />
-      </>
+      </div>
     );
   }
 }

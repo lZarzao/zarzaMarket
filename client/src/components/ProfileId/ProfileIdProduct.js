@@ -21,8 +21,10 @@ class ProfileIdProducts extends Component {
 
   render() {
     return (
-      <Container>
-        <Row>
+      <Container style={{ width: "75vw" }}>
+        <h1>Productos a la Venta</h1>
+        <hr />
+        <Row className="productsProfile">
           {this.state.products.map((elm, idx) => (
             <ProductCard
               key={idx}

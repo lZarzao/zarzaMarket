@@ -34,7 +34,8 @@ class Puzzle extends Component {
     .then(()=>this._service.findByCategory(category))
     .then(theResult => {
         aux = theResult.data.sort((a, b) => a - b)
-        aux = aux.filter(elm => elm.creator !== id)})
+        //DEBO CAMBIAR EL "||" POR "&&"
+        aux = aux.filter(elm => elm.creator !== id || elm.show === true)})
     .then(()=> this.setState({ puzzle: aux, backup: aux }))
     .then(() => {
       let categoryCopy = []
@@ -129,24 +130,7 @@ class Puzzle extends Component {
     return (
       <Container>
         <h1>Puzzle!</h1>
-        <Carousel>
-          {data.map((elm, idx) => (
-            <Carousel.Item className="carousel" key={idx}>
-              <img
-                className="d-block w-100"
-                src="../images/puzzle.png"
-                alt="First slide"
-                height="200px"
-              />
-              <Carousel.Caption>
-                <h3>{elm}</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          ))}
-        </Carousel>
+        <hr/>
         {this.state.category.length && (
           <div>
             <div className="filterSideBar">
@@ -171,8 +155,7 @@ class Puzzle extends Component {
                     name="delivery"
                     onChange={this.handleDeliveryChange}
                     value={this.state.delivery}
-                  />
-                  <hr />
+                  /><br/>
                   <Form.Label><p>Nogotiable</p></Form.Label>
                   <Form.Control
                     type="checkbox"
@@ -208,7 +191,7 @@ class Puzzle extends Component {
         )}
         <Row>
           {this.state.puzzle.map((elm, idx) => (
-            <ProductCard key={idx} products={elm} />
+            <ProductCard key={idx} history={this.props.history} products={elm} />
           ))}
         </Row>
       </Container>

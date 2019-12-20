@@ -2,9 +2,148 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: #0487D9;
+}
+
+body h1 {
+  font-weight: 100;
+  font-size: 48px;
+  margin-top: 20px;
+  color: #FFF5EC
+}
+
+body h2 {
+  font-weight: 100;
+  font-size: 42px
+}
+
+body h3 {
+  font-weight: 100;
+  font-size: 36
+}
+
+a {
+  text-decoration: none;
+  color: inherit
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit
+}
+
+Button{
+  background-color: #0487D9;
+  color: #FFF5EC;
+}
+
+Button:hover{
+  background-color: #FFF5EC;
+  color: #0487D9;
 }
 
 /*Main*/
+.title {
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+
+.card-block {
+    font-size: 1em;
+    position: relative;
+    margin: 0;
+    padding: 1em;
+    border: none;
+    border-top: 1px solid rgba(34, 36, 38, .1);
+    box-shadow: none;
+    width: 500px;
+}
+.card2 {
+    font-size: 1em;
+    overflow: hidden;
+    padding: 5;
+    border: none;
+    background-color: #FFF5EC;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px #666;
+    margin-top:20px;
+}
+
+.carousel-control-prev-icon {
+ background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+
+#CarouselTest {
+  padding-right: 20px;
+}
+
+#CarouselTest2 {
+  padding-right: 20px;
+}
+
+#CarouselTest3 {
+  padding-right: 20px;
+}
+
+.btn {
+  margin-top: auto;
+  border: 1px solid black;
+  background-color: #0487D9;
+  color: #FFF5EC;
+  font-size: 1rem;
+  line-height: 1.5;
+  width: 200px;
+}
+
+.btn:hover {
+  margin-top: auto;
+  border: 1px solid black;
+  background-color: #FFF5EC;
+  color: #0487D9;
+  font-size: 1rem;
+  line-height: 1.5;
+  width: 200px;
+}
+
+.btn-primary {
+  border: 1px solid black;
+  background-color: #0487D9;
+  color: #FFF5EC;
+  font-size: 1rem;
+  line-height: 1.5;
+  width: 200px
+}
+
+.btn-primary:hover {
+  border: 1px solid black;
+  background-color: #FFF5EC;
+  color: #0487D9;
+  font-size: 1rem;
+  line-height: 1.5;
+  width: 200px
+}
+
+.DeleteButton {
+  border: 1px solid black;
+  background-color: red;
+  color: #FFF5EC;
+  font-size: 1rem;
+  line-height: 1.5;
+  width: 200px
+}
+
+.DeleteButton:hover {
+  border: 1px solid black;
+  background-color: #FFF5EC;
+  color: red;
+  font-size: 1rem;
+  line-height: 1.5;
+  width: 200px
+}
 
 .boxes {
   align-items: center;
@@ -15,13 +154,61 @@ body {
   margin: 0px;
 }
 
+/*Login*/
+.loginView{
+  border-radius: 10px;
+  width: 450px;
+  height: 80vH;
+  padding: 50px;
+  margin-top: 30px;
+  background-color: #FFF5EC;
+  box-shadow: 2px 2px 10px #666;
+}
+
+.loginView Button{
+  width: 100%;
+  background-color: #0487D9;
+  color: #FFF5EC;
+}
+
+.loginView Button:hover{
+  width: 100%;
+  background-color: #FFF5EC;
+  color: #0487D9;
+}
+
+.LoginImgDiv{
+  margin: auto;
+  background-color: #0487D9;
+  display: flex;
+  justify-content: space-around;
+  width: 180px;
+  border-radius: 50%;
+}
+
+.loginView h1{
+  font-weight: 100;
+  font-size: 48px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.LoginImgDiv img{
+  height: 150px;
+  display: block;
+  padding: 10px;
+  /* padding: 20px; */
+}
+
 /*Profile*/
 
 .profileDiv{
   padding-top: 20px;
   position: relative;
   height: 200px;
-  background-color: lightslategray;
+  background-color: #1D4259;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #666;
 }
 
 .profileDiv p, h1{
@@ -32,7 +219,9 @@ body {
   position: relative;
   height: 200px;
   margin-top: 5px;
-  background-color: lightsalmon;
+  background-color: #FFF5EC;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #666;
 }
 
 .ImgRow{
@@ -42,7 +231,7 @@ body {
 .ImgRow Img{
   margin: auto auto;
   height: 150px;
-  border: 5px solid #fff;
+  border: 5px solid #0487D9;
   border-radius: 500px;
   display: block;
 }
@@ -53,8 +242,10 @@ body {
 
 .datosDiv{
   margin-top: 1rem;
-  background-color: lightyellow;
+  background-color: #FFF5EC;
   padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #666;
 }
 
 .datosDivHead{
@@ -64,6 +255,11 @@ body {
 
 .datosDivHead h4, p{
   margin-bottom: 0px;
+  font-weight: 100;
+}
+
+.paymentData h4, p, span{
+  font-weight: 100;
 }
 
 /*Profile SideBar*/
@@ -144,25 +340,33 @@ body {
 /*Filter Side Bar*/
 
 .filterSideBar{
+    overflow: scroll;
     position: fixed;
+    padding: 5px;
     width: 150px;
     left: 0;
     top: 56px;
     bottom: 0;
-    background-color: #253238;
+    background-color:  #1D4259;
     padding-top: 16px;
     height: calc(100vh - 56px);
     z-index: 99;
 }
 
+.filterSideBar input{
+  display: inline;
+  margin-left: 10px
+}
+
 .filtersideBarSection h5{
   color: #fff;
-  font-size: .625rem;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 100;
   /* color: rgba(255,255,255,.5); */
   text-transform: uppercase;
   letter-spacing: .5px;
   margin-bottom: 0;
+  text-decoration: underline;
 }
 
 .filtersideBarSection p{
@@ -171,8 +375,76 @@ body {
 }
 
 .filtersideBarSection input[type='checkbox'] {
-    display: inline;
     width: auto;
     height: 15px;
     margin-left: 5px;
+}
+
+/*Card*/
+
+.card{
+  height: 500px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.card img{
+  height: 250px;
+  object-fit: contain;
+}
+
+/*Detail View*/
+
+.DetailView{
+  border-radius: 10px;
+  width: 100%;
+  padding: 50px;
+  margin-top: 30px;
+  background-color: #FFF5EC;
+  box-shadow: 2px 2px 10px #666;
+}
+
+.DetailView span{
+  font-size: 24px;
+  font-weight: 100;
+}
+
+.imgDetail{
+  border-radius: 10px;
+  height: 95%;
+  width: 100%;
+  margin-top: 30px;
+  background-color: #FFF5EC;
+  box-shadow: 2px 2px 10px #666;
+  display:flex;
+ align-items: center
+}
+
+.imgDetail img{
+  display: block;
+  width:100%;
+  object-fit: fill;
+}
+
+/*New Product*/
+
+.NewProduct {
+  border-radius: 10px;
+  width: 450px;
+  padding: 50px;
+  margin: 30px auto 0 auto;
+  background-color: #FFF5EC;
+  box-shadow: 2px 2px 10px #666;
+}
+
+.productsProfile{
+  margin-top: 1rem;
+  background-color: #FFF5EC;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #666;
+}
+
+.profileProductCard{
+  border: 1px solid black;
 }

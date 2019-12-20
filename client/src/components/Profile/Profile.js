@@ -7,12 +7,12 @@ import ProfileHead from "./ProfileHead"
 import ProfilePayment from "./ProfilePayment"
 import ProfileProducts from "./ProfileProduct"
 import ProfileShop from "./ProfileShop"
+import ProfileSave from "./ProfileSave"
 import ProfileValoration from "./ProfileValoration"
 import ProfileStadistic from "./ProfileStadistic"
 import ProfileDataEdit from "./ProfileDataEdit"
 import ProductEdit from "../Product/ProductEdit"
 import ProductDetail from "../Profile/ProfileProductDetail"
-import {Chat} from "../chat/chat"
 
 //import Service from "./service"
 
@@ -33,13 +33,13 @@ class Profile extends Component {
           <Route path="/zarzamarket/profile/payment" component={ProfilePayment}/>
           <Route exact path="/zarzamarket/profile/myproducts" render={match => <ProfileProducts {...match}/>}/>
           <Route path="/zarzamarket/profile/shop" component={ProfileShop}/>
+          <Route path="/zarzamarket/profile/save" component={ProfileSave}/>
           <Route path="/zarzamarket/profile/valoration" component={ProfileValoration}/>
           <Route path="/zarzamarket/profile/estadistic" component={ProfileStadistic}/>
           <Route path="/zarzamarket/profile/edit" render={match => <ProfileDataEdit {...match} />}/>
           <Route exact path="/zarzamarket/profile/myproducts/:handle" render={match => <ProductDetail {...match} />}/>
           <Route path="/zarzamarket/profile/myproducts/edit/:handle" render={match => <ProductEdit {...match} />}/>
         </Switch>
-        <Chat />
       </Container>
     );
   }

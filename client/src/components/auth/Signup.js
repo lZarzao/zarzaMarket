@@ -29,28 +29,30 @@ class SignupForm extends Component {
 
   render() {
     return (
-      <Container>
+      <Container className="loginView">
+        <div className="LoginImgDiv">
+          <img src="/images/lego.png"></img>
+        </div>
         <h1>Registro</h1>
-
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
-            <Form.Label>Usuario</Form.Label>
             <Form.Control
               type="text"
               name="username"
               onChange={this.handleInputChange}
               value={this.state.username}
-            />
+              placeholder="Email"
+            /><br/>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Contraseña</Form.Label>
             <Form.Control
-              type="text"
+              type="password"
               name="password"
               onChange={this.handleInputChange}
               value={this.state.password}
+              placeholder="Password"
             />
-          </Form.Group>
+          </Form.Group><br/>
           <Button variant="dark" type="submit">
             Registrarme
           </Button>

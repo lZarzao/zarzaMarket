@@ -2,12 +2,16 @@ import React, { Component } from "react"
 import { Button, Form, Container, select } from "react-bootstrap"
 
 import Service from "../../service/Product.service"
+import FilesService from "../../service/Files.service";
 
 class newProduct extends Component {
   constructor(props) {
-    super(props)
-    this._service = new Service();
+    super(props);
+    this._service = new Service()
+    this._filesService = new FilesService()
     this.state = {
+      disabledButton: false,
+      buttonText: "Añadir Producto",
       name: "",
       category: "",
       subcategory: "",
@@ -18,6 +22,7 @@ class newProduct extends Component {
       delivery: false,
       brand: "",
       modelCode: "",
+      imageUrl: "",
       selectCategory: ["LEGO", "Video Juegos", "Puzzle"],
       selectSubCategoryLEGO: [
         "Architecture",
@@ -89,17 +94,40 @@ class newProduct extends Component {
         "Keyword",
         "Otro"
       ]
-    };  
+    };
   }
 
   handleSubmit = e => {
-    e.preventDefault()
+    e.preventDefault();
+    let show = true;
     const {
-      name, category, subcategory, subsubcategory, price,
-      negotiable, description, delivery, brand, modelCode} = this.state;
+      name,
+      category,
+      subcategory,
+      subsubcategory,
+      price,
+      negotiable,
+      description,
+      delivery,
+      brand,
+      modelCode,
+      imageUrl
+    } = this.state;
     this._service
-      .new(name, category, subcategory, subsubcategory, price,
-        negotiable, description, delivery, brand, modelCode)
+      .new(
+        name,
+        category,
+        subcategory,
+        subsubcategory,
+        price,
+        negotiable,
+        description,
+        delivery,
+        brand,
+        modelCode,
+        imageUrl,
+        show
+      )
       .then(() => {
         this.setState({
           name: "",
@@ -112,233 +140,288 @@ class newProduct extends Component {
           delivery: false,
           brand: "",
           modelCode: ""
-        })
-        this.props.history.push("/zarzamarket/profile")
+        });
+        this.props.history.push("/zarzamarket/profile");
       })
-      .catch(err => console.log(err.response))
-  }
+      .catch(err => console.log(err.response));
+  };
 
   handleInputChange = e => {
-    let { name, value } = e.target
-    if (name === "negotiable" || name === "delivery") value = e.target.checked
-    this.setState({ [name]: value })
+    let { name, value } = e.target;
+    if (name === "negotiable" || name === "delivery") value = e.target.checked;
+    this.setState({ [name]: value });
   };
+
+  handleFileUpload = e => {
+    this.setState({ disabledButton: true, buttonText: "Subiendo imagen..." });
+
+    const uploadData = new FormData();
+    uploadData.append("imageUrl", e.target.files[0]);
+    this._filesService
+      .handleUpload(uploadData)
+      .then(response => {
+        console.log(
+          "Subida de archivo finalizada! La URL de Cloudinray es: ",
+          response.data.secure_url
+        );
+        this.setState({
+          disabledButton: false,
+          buttonText: "Añadir Producto",
+          imageUrl: response.data.secure_url
+        });
+      })
+      .catch(err => console.log(err));
+  }
 
   render() {
     return (
       <Container>
         <h1>Add A New Product</h1>
-
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group>
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              onChange={this.handleInputChange}
-              value={this.state.name}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Category</Form.Label>
-            <select
-              name="category"
-              required={true}
-              onChange={this.handleInputChange}
-              value={this.state.category}
-            >
-              {this.state.category === "" ? (
-                <>
-                  <option value={this.state.category}>Choose a category</option>
-                  {this.state.selectCategory.map((elm, idx) => (
+        <div className="NewProduct">
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                name="name"
+                onChange={this.handleInputChange}
+                value={this.state.name}
+                placeholder="Nombre"
+              />
+            </Form.Group>
+            <Form.Group>
+              <select
+                name="category"
+                required={true}
+                onChange={this.handleInputChange}
+                value={this.state.category}
+              >
+                {this.state.category === "" ? (
+                  <>
+                    <option value={this.state.category}>
+                      Elige una Categoria
+                    </option>
+                    {this.state.selectCategory.map((elm, idx) => (
+                      <option key={idx} value={elm}>
+                        {elm}
+                      </option>
+                    ))}
+                  </>
+                ) : (
+                  this.state.selectCategory.map((elm, idx) => (
                     <option key={idx} value={elm}>
                       {elm}
                     </option>
-                  ))}
-                </>
-              ) : (
-                this.state.selectCategory.map((elm, idx) => (
-                  <option key={idx} value={elm}>
-                    {elm}
-                  </option>
-                ))
-              )}
-            </select>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Subcategory</Form.Label>
-            <select
-              name="subcategory"
-              required={true}
-              onChange={this.handleInputChange}
-              value={this.state.subcategory}
-            >
-              {this.state.category === "" && (
-                <option value="">First choose a Category</option>
-              )}
-              {this.state.category === "LEGO" && (
-                <>
-                  {this.state.subcategory === "" ? (
-                    <>
-                      <option value={this.state.subcategory}>
-                        Choose a Subcategory
-                      </option>
-                      {this.state.selectSubCategoryLEGO.map((elm, idx) => (
+                  ))
+                )}
+              </select>
+            </Form.Group>
+            <Form.Group>
+              <select
+                name="subcategory"
+                required={true}
+                onChange={this.handleInputChange}
+                value={this.state.subcategory}
+              >
+                {this.state.category === "" && (
+                  <option value="">Primero Elige una Categoria</option>
+                )}
+                {this.state.category === "LEGO" && (
+                  <>
+                    {this.state.subcategory === "" ? (
+                      <>
+                        <option value={this.state.subcategory}>
+                          Elige una Sub Categoría
+                        </option>
+                        {this.state.selectSubCategoryLEGO.map((elm, idx) => (
+                          <option key={idx} value={elm}>
+                            {elm}
+                          </option>
+                        ))}
+                      </>
+                    ) : (
+                      this.state.selectSubCategoryLEGO.map((elm, idx) => (
                         <option key={idx} value={elm}>
                           {elm}
                         </option>
-                      ))}
-                    </>
-                  ) : (
-                    this.state.selectSubCategoryLEGO.map((elm, idx) => (
-                      <option key={idx} value={elm}>
-                        {elm}
-                      </option>
-                    ))
-                  )}
-                </>
-              )}
+                      ))
+                    )}
+                  </>
+                )}
+                {this.state.category === "Video Juegos" && (
+                  <>
+                    {this.state.subcategory === "" ? (
+                      <>
+                        <option value={this.state.subcategory}>
+                          Elige una Sub Categoría
+                        </option>
+                        {this.state.selectedSubCategoryVG.map((elm, idx) => (
+                          <option key={idx} value={elm}>
+                            {elm}
+                          </option>
+                        ))}
+                      </>
+                    ) : (
+                      this.state.selectedSubCategoryVG.map((elm, idx) => (
+                        <option key={idx} value={elm}>
+                          {elm}
+                        </option>
+                      ))
+                    )}
+                  </>
+                )}
+                {this.state.category === "Puzzle" && (
+                  <>
+                    {this.state.subcategory === "" ? (
+                      <>
+                        <option value={this.state.subcategory}>
+                          Elige una Sub Categoría
+                        </option>
+                        {this.state.selectedSubCategoryPuzzle.map(
+                          (elm, idx) => (
+                            <option key={idx} value={elm}>
+                              {elm}
+                            </option>
+                          )
+                        )}
+                      </>
+                    ) : (
+                      this.state.selectedSubCategoryPuzzle.map((elm, idx) => (
+                        <option key={idx} value={elm}>
+                          {elm}
+                        </option>
+                      ))
+                    )}
+                  </>
+                )}
+              </select>
+            </Form.Group>
+            <Form.Group>
               {this.state.category === "Video Juegos" && (
                 <>
-                  {this.state.subcategory === "" ? (
-                    <>
-                      <option value={this.state.subcategory}>
-                        Choose a Subcategory
-                      </option>
-                      {this.state.selectedSubCategoryVG.map((elm, idx) => (
+                  <select
+                    name="subsubcategory"
+                    required={true}
+                    onChange={this.handleInputChange}
+                    value={this.state.subsubcategory}
+                  >
+                    {this.state.subsubcategory === "" ? (
+                      <>
+                        <option value={this.state.subsubcategory}>
+                          Elige una Sub Sub Categoría
+                        </option>
+                        {this.state.selectedSubSubCategoryVG.map((elm, idx) => (
+                          <option key={idx} value={elm}>
+                            {elm}
+                          </option>
+                        ))}
+                      </>
+                    ) : (
+                      this.state.selectedSubSubCategoryVG.map((elm, idx) => (
                         <option key={idx} value={elm}>
                           {elm}
                         </option>
-                      ))}
-                    </>
-                  ) : (
-                    this.state.selectedSubCategoryVG.map((elm, idx) => (
-                      <option key={idx} value={elm}>
-                        {elm}
-                      </option>
-                    ))
-                  )}
+                      ))
+                    )}
+                  </select>
+                  <br />
                 </>
               )}
-              {this.state.category === "Puzzle" && (
+              {(this.state.category === "Video Juegos" ||
+                this.state.category === "Puzzle") && (
+                <><br/>
+                  <Form.Control
+                    type="text"
+                    name="brand"
+                    onChange={this.handleInputChange}
+                    value={this.state.brand}
+                    placeholder="Marca"
+                  ></Form.Control>
+                  <br />
+                </>
+              )}
+              {(this.state.category === "LEGO" ||
+                this.state.category === "Puzzle") && (
                 <>
-                  {this.state.subcategory === "" ? (
-                    <>
-                      <option value={this.state.subcategory}>
-                        Choose a Subcategory
-                      </option>
-                      {this.state.selectedSubCategoryPuzzle.map((elm, idx) => (
-                        <option key={idx} value={elm}>
-                          {elm}
-                        </option>
-                      ))}
-                    </>
-                  ) : (
-                    this.state.selectedSubCategoryPuzzle.map((elm, idx) => (
-                      <option key={idx} value={elm}>
-                        {elm}
-                      </option>
-                    ))
-                  )}
+                  <Form.Control
+                    type="text"
+                    name="modelCode"
+                    onChange={this.handleInputChange}
+                    value={this.state.modelCode}
+                    placeholder="Código de Producto"
+                  ></Form.Control>
                 </>
               )}
-            </select>
-          </Form.Group>
-          <Form.Group>
-            {this.state.category === "Video Juegos" && (
-              <>
-                <Form.Label>Subsubcategory</Form.Label>
-                <select
-                  name="subsubcategory"
-                  required={true}
-                  onChange={this.handleInputChange}
-                  value={this.state.subsubcategory}>
-                  {this.state.subsubcategory === "" ? (
-                    <>
-                      <option value={this.state.subsubcategory}>
-                        Choose a Subsubcategory
-                      </option>
-                      {this.state.selectedSubSubCategoryVG.map((elm, idx) => (
-                        <option key={idx} value={elm}>
-                          {elm}
-                        </option>
-                      ))}
-                    </>
-                  ) : (
-                    this.state.selectedSubSubCategoryVG.map((elm, idx) => (
-                      <option key={idx} value={elm}>
-                        {elm}
-                      </option>
-                    ))
-                  )}
-                </select><br/>
-              </>
-            )}
-            {(this.state.category === "Video Juegos" || this.state.category === "Puzzle") && (
-              <>
-                <Form.Label>Marca</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="brand"
-                  onChange={this.handleInputChange}
-                  value={this.state.brand}
-                ></Form.Control>
-              </>
-            )}
-            {(this.state.category === "LEGO" || this.state.category === "Puzzle") && (
-              <>
-                <Form.Label>Model Code</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="modelCode"
-                  onChange={this.handleInputChange}
-                  value={this.state.modelCode}
-                ></Form.Control>
-              </>
-            )}
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Price</Form.Label>
-            <Form.Control
-              type="number"
-              name="price"
-              onChange={this.handleInputChange}
-              value={this.state.price}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Negotiable?</Form.Label>
-            <Form.Control
-              type="checkbox"
-              name="negotiable"
-              onChange={this.handleInputChange}
-              checked={this.state.negotiable}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              type="text"
-              name="description"
-              onChange={this.handleInputChange}
-              value={this.state.description}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Delivery</Form.Label>
-            <Form.Control
-              type="checkbox"
-              name="delivery"
-              onChange={this.handleInputChange}
-              checked={this.state.delivery}
-            />
-          </Form.Group>
-          <Button variant="dark" type="submit">
-            Add
-          </Button>
-        </Form>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                type="number"
+                name="price"
+                onChange={this.handleInputChange}
+                value={this.state.price}
+                placeholder="Precio"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>¿El precio es Negociable?</Form.Label>
+              <Form.Control
+                style={{
+                  display: "inline",
+                  width: "10%",
+                  height: "15px",
+                  marginLeft: "10px"
+                }}
+                type="checkbox"
+                name="negotiable"
+                onChange={this.handleInputChange}
+                checked={this.state.negotiable}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                name="description"
+                onChange={this.handleInputChange}
+                value={this.state.description}
+                placeholder="Descripción del Producto"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>¿Incluye Delivery?</Form.Label>
+              <Form.Control
+                style={{
+                  display: "inline",
+                  width: "10%",
+                  height: "15px",
+                  marginLeft: "10px"
+                }}
+                className="inputForm"
+                type="checkbox"
+                name="delivery"
+                onChange={this.handleInputChange}
+                checked={this.state.delivery}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Subir Imagen</Form.Label>
+              <Form.Control
+                name="imageUrl"
+                type="file"
+                onChange={this.handleFileUpload}
+              />
+            </Form.Group>
+            <br />
+            <Button
+              variant="dark"
+              type="submit"
+              style={{ width: "100%" }}
+              disabled={this.state.disabledButton}
+            >
+              {this.state.buttonText}
+            </Button>
+          </Form>
+        </div>
       </Container>
-    )
+    );
   }
 }
 

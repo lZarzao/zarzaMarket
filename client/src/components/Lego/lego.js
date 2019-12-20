@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Carousel, Row, Form } from "react-bootstrap";
+import { Container, Row, Form } from "react-bootstrap";
 import ProductCard from "../Product/ProductCard";
 
 import Service from "../../service/Product.service";
@@ -34,7 +34,8 @@ class Lego extends Component {
       .catch(err => console.log(err.response));
     this._service.findByCategory(category)
       .then(theResult => {
-        aux = theResult.data.filter(elm => elm.creator !== id)
+        //DEBO CAMBIAR EL "||" POR "&&"
+        aux = theResult.data.filter(elm => elm.creator !== id || elm.show === true)
       })
       .then(() =>
         this.setState({ legos: aux, backup: aux })
@@ -98,16 +99,6 @@ class Lego extends Component {
   }
 
   render() {
-    let data = [
-      "Architecture",
-      "City",
-      "Creator",
-      "LEGO® Batman",
-      "LEGO® Spider-Man",
-      "NINJAGO®",
-      "Star Wars™",
-      "Technic™"
-    ]
 
     let margen = []
     let i = 50
@@ -119,25 +110,8 @@ class Lego extends Component {
 
     return (
       <Container>
-        <h1>Legos!</h1>
-        <Carousel>
-          {data.map((elm, idx) => (
-            <Carousel.Item className="carousel" key={idx}>
-              <img
-                className="d-block w-100"
-                src="../images/puzzle.png"
-                alt="First slide"
-                height="200px"
-              />
-              <Carousel.Caption>
-                <h3>{elm}</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          ))}
-        </Carousel>
+        <h1>¡Legos!</h1>
+        <hr />
         {this.state.category.length && (
           <div>
             <div className="filterSideBar">
@@ -147,40 +121,51 @@ class Lego extends Component {
                 <h5>Sub Categorias</h5>
                 {this.state.category.map((elm, idx) => (
                   <div key={idx}>
-                    <Form.Label ><p>{elm}</p></Form.Label>
+                    <Form.Label>
+                      <p>{elm}</p>
+                    </Form.Label>
                     <Form.Control
                       type="checkbox"
                       onChange={this.handleInputChange}
                       value={elm}
-                    /></div>
+                    />
+                  </div>
                 ))}
-                <hr/>
+                <hr />
                 <div className="filtersideBarSection">
-                  <Form.Label ><p>Delivery</p></Form.Label>
-                <Form.Control
-                  type="checkbox"
-                  name="delivery"
-                  onChange={this.handleDeliveryChange}
-                  value={this.state.delivery}
-                />
-                <hr/>
-                <Form.Label><p>Nogotiable</p></Form.Label>
-                <Form.Control
-                  type="checkbox"
-                  name="negotiable"
-                  onChange={this.handleNegotiableChange}
-                  value={this.state.negotiable}
-                />
-                <hr/>
+                  <Form.Label>
+                    <p>Delivery</p>
+                  </Form.Label>
+                  <Form.Control
+                    type="checkbox"
+                    name="delivery"
+                    onChange={this.handleDeliveryChange}
+                    value={this.state.delivery}
+                  />
+                  <Form.Label>
+                    <p>Nogotiable</p>
+                  </Form.Label>
+                  <Form.Control
+                    type="checkbox"
+                    name="negotiable"
+                    onChange={this.handleNegotiableChange}
+                    value={this.state.negotiable}
+                  />
+                  <hr />
                   <h5>Price</h5>
                   {margen.map((elm, idx) => (
                     <div key={idx}>
-                      <Form.Label ><p>{margen[idx-1]? margen[idx-1] : 0}... {elm}€</p></Form.Label>
+                      <Form.Label>
+                        <p>
+                          {margen[idx - 1] ? margen[idx - 1] : 0}... {elm}€
+                        </p>
+                      </Form.Label>
                       <Form.Control
                         type="checkbox"
                         onChange={this.handlePriceChange}
-                        value={[margen[idx-1], elm]}
-                      /></div>
+                        value={[margen[idx - 1], elm]}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -189,7 +174,11 @@ class Lego extends Component {
         )}
         <Row>
           {this.state.legos.map((elm, idx) => (
-            <ProductCard key={idx} products={elm} />
+            <ProductCard
+              key={idx}
+              history={this.props.history}
+              products={elm}
+            />
           ))}
         </Row>
       </Container>

@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Container, Row, Col, } from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 import Service from "../../service/Auth.service"
@@ -19,12 +19,11 @@ class ProfileHead extends Component {
           <h1>
             {this.props.user.username} {this.props.user.userlastname}
           </h1>
-          <p>{this.props.user.email}</p>
         </div>
         <div className="profileImgDiv">
           <Row style={{ height: 80 + "px" }}>
             <Col md="12" className="ImgRow">
-              <img src="/images/xbox.png" alt="pic"></img>
+              <img src={this.props.user.imageUrl} alt="pic"></img>
             </Col>
           </Row>
           <Row>
@@ -39,7 +38,7 @@ class ProfileHead extends Component {
             </Col>
           </Row>
         </div>
-        <Row>
+        <Row className="productsProfile" style={{width: "75vw", margin: "auto", marginTop: "20px"}}>
           <Col md="3"><Link to={`/zarzamarket/visit/profile/${this.props.user._id}`}>Profile</Link></Col>
           <Col md="3"><Link to={`/zarzamarket/visit/profile/${this.props.user._id}/products`}>Products</Link></Col>
           <Col md="3"><Link to={`/zarzamarket/visit/profile/${this.props.user._id}/sales`}>Sales</Link></Col>

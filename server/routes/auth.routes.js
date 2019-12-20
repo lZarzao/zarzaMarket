@@ -55,7 +55,7 @@ authRoutes.post("/signup", (req, res, next) => {
 });
 
 authRoutes.post("/edit", (req, res) => {
-  const {username, userlastname, email, telefono, location} = req.body
+  const {username, userlastname, email, telefono, location, imageUrl} = req.body
   
   // const salt = bcrypt.genSaltSync(10);
   // const hashPass = bcrypt.hashSync(password, salt);
@@ -65,12 +65,13 @@ authRoutes.post("/edit", (req, res) => {
     userlastname,
     email,
     telefono,
-    location
+    location,
+    imageUrl
   })
     .then(x => res.status(200).json(x))
     .catch(err => {
-      res.status(500).json({ message: "Updating went bad." })
-    })
+      res.status(500).json({ message: "Updating went bad." });
+    });
 })
 
 authRoutes.post("/login", (req, res, next) => {

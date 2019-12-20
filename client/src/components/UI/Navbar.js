@@ -18,23 +18,25 @@ class Navigation extends Component {
 
   render() {
     const saludo = this.props.loggedInUser
-      ? this.props.loggedInUser.username
+      ? (`${this.props.loggedInUser.username} ${this.props.loggedInUser.userlastname}`)
       : "invitado"
 
     return this.props.loggedInUser ? (
-      <Navbar bg="dark" variant="dark" expand="md" fixed="top">
+      <Navbar bg="light" variant="light" expand="md" fixed="top">
         <Nav.Link as="li">
-          <Link to="/zarzamarket">#</Link>
+          <Link to="/zarzamarket"><img src="/images/logo_zarza.png" style={{width: "50px"}}/></Link>
         </Nav.Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse>
           <Nav className="ml-auto">
             <Navbar.Text>{saludo}</Navbar.Text>
+            <img src={this.props.loggedInUser.imageUrl} className="rounded-circle z-depth-0"
+              alt="avatar image" height="35" style={{marginLeft: "10px"}}/>
             <Nav.Link as="li">
-              <Link to="/zarzamarket/profile/">Profile</Link>
+              <Link to="/zarzamarket/profile/">Mi Perfil</Link>
             </Nav.Link>
             <Nav.Link as="li">
-              <Link to="/zarzamarket/myproduct/new">New Product</Link>
+              <Link to="/zarzamarket/myproduct/new" style={{ color: "#0487D9"}}>New Product</Link>
             </Nav.Link>
             <Nav.Link as="li" onClick={this.logoutUser}>
               Logout
@@ -43,9 +45,9 @@ class Navigation extends Component {
         </Navbar.Collapse>
       </Navbar>
     ) : (
-      <Navbar bg="dark" variant="dark" expand="md" fixed="top">
+      <Navbar bg="light" style={{backgroundColor: "#FFF5EC"}} expand="md" fixed="top">
         <Nav.Link as="li">
-          <Link to="/zarzamarket">#</Link>
+            <Link to="/zarzamarket"><img src="/images/logo_zarza.png" alt="zarza_logo" style={{ width: "50px" }}/></Link>
         </Nav.Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse>
